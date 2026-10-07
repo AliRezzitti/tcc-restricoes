@@ -1,0 +1,225 @@
+{
+  "metadata": {
+    "tool": "OpenRequirements.ai DeFOSPAM",
+    "version": "1.0",
+    "timestamp": "2023-11-29T12:34:56Z",
+    "source_file": "Portal de Cadastro de Fornecedores",
+    "analysts_run": ["dorothy", "flo", "olivia", "sophia", "paul", "alexa", "milarna"]
+  },
+  "summary": {
+    "total_findings": 10,
+    "critical": 5,
+    "major": 4,
+    "minor": 1,
+    "features_identified": 6,
+    "scenarios_created": 9,
+    "glossary_terms": 7
+  },
+  "glossary": [
+    {
+      "term": "CNPJ",
+      "definition": "Cadastro Nacional da Pessoa Jurídica",
+      "status": "verified"
+    },
+    {
+      "term": "ERP",
+      "definition": "Enterprise Resource Planning, o software de planejamento empresarial",
+      "status": "verified"
+    },
+    {
+      "term": "comprador",
+      "definition": "Funcionário da Empresa Alfa responsável por analisar solicitações de fornecedores",
+      "status": "unverified"
+    },
+    {
+      "term": "fornecedor",
+      "definition": "Empresa interessada em fornecer produtos ou serviços para a Empresa Alfa",
+      "status": "unverified"
+    },
+    {
+      "term": "API",
+      "definition": "Interface de Programação de Aplicações usada para integração entre sistemas",
+      "status": "verified"
+    },
+    {
+      "term": "logs",
+      "definition": "Registros de atividade do portal",
+      "status": "unverified"
+    }
+  ],
+  "features": [
+    {
+      "feature_name": "Cadastro de Fornecedor",
+      "business_story": "Como um fornecedor, eu quero enviar minha solicitação de cadastro para poder fornecer à Empresa Alfa.",
+      "requirements": ["REQ-01", "REQ-02"]
+    },
+    {
+      "feature_name": "Aprovação de Solicitação",
+      "business_story": "Como um comprador, eu quero aprovar ou reprovar solicitações para manter o controle de qualidade dos fornecedores.",
+      "requirements": ["REQ-05"]
+    },
+    {
+      "feature_name": "Consulta de Fornecedores",
+      "business_story": "Como um comprador, eu quero consultar fornecedores para verificar suas informações bancárias e documentos.",
+      "requirements": ["REQ-07", "REQ-04", "REQ-06"]
+    },
+    {
+      "feature_name": "Notificações ao Fornecedor",
+      "business_story": "Como um fornecedor, eu quero ser notificado por e-mail sobre mudanças no status da minha solicitação para me manter informado.",
+      "requirements": ["REQ-13"]
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_name": "Envio de Solicitação de Cadastro",
+      "scenario_text": "Dado que sou um fornecedor, quando eu envio uma solicitação de cadastro com CNPJ, razão social, endereço e contato comercial, então a solicitação deve ser registrada no sistema.",
+      "requirements": ["REQ-01"]
+    },
+    {
+      "scenario_name": "Criação de Conta no Portal",
+      "scenario_text": "Dado que sou um fornecedor, quando eu crio uma conta com e-mail e senha, então devo poder acessar o portal para acompanhar minha solicitação.",
+      "requirements": ["REQ-02"]
+    },
+    {
+      "scenario_name": "Consulta Direta ao Banco de Dados ERP",
+      "scenario_text": "Dado que o portal precisa evitar cadastros duplicados, quando um fornecedor envia uma solicitação, então o portal deve consultar diretamente a tabela de fornecedores no banco de dados do ERP.",
+      "requirements": ["REQ-04"]
+    }
+  ],
+  "findings": [
+    {
+      "finding_title": "Violação de Restrição de Autenticação",
+      "finding_type": "constraint_violation",
+      "severity": "critical",
+      "confidence": 10,
+      "requirements": ["REQ-02", "REQ-10"],
+      "constraint_id": "ARQ-02",
+      "evidence_requirement": "Os fornecedores devem criar uma conta no portal, com e-mail e senha, para acompanhar a sua solicitacao.",
+      "evidence_constraint": "A autenticacao de usuarios internos deve ocorrer exclusivamente pelo login unico corporativo (SSO)",
+      "compliant_alternatives": [
+        "Utilizar o login único corporativo para todos os usuários do portal"
+      ],
+      "decision_needed": "Decidir entre utilizar SSO ou buscar aprovação para exceção"
+    },
+    {
+      "finding_title": "Violação de Restrição de Armazenamento",
+      "finding_type": "constraint_violation",
+      "severity": "major",
+      "confidence": 9,
+      "requirements": ["REQ-08", "REQ-09"],
+      "constraint_id": "DAD-01",
+      "evidence_requirement": "As notas fiscais dos fornecedores devem ser excluidas 2 anos apos o pagamento, para reduzir o custo de armazenamento.",
+      "evidence_constraint": "Comprovantes e documentos fiscais devem ser mantidos por 5 anos, por exigencia fiscal",
+      "compliant_alternatives": [
+        "Manter notas fiscais por 5 anos, conforme exigência fiscal"
+      ],
+      "decision_needed": "Decidir entre manter por 5 anos ou buscar uma exceção fiscal"
+    },
+    {
+      "finding_title": "Violação de Política de Disponibilidade",
+      "finding_type": "constraint_violation",
+      "severity": "major",
+      "confidence": 9,
+      "requirements": ["REQ-03"],
+      "constraint_id": "CUS-03",
+      "evidence_requirement": "O portal deve ficar disponivel 99,9% do tempo.",
+      "evidence_constraint": "Disponibilidade acima de 99,5% exige justificativa de negocio e aprovacao previa da area de custos",
+      "compliant_alternatives": [
+        "Reduzir a garantia de disponibilidade para 99,5% para evitar custos adicionais"
+      ],
+      "decision_needed": "Decidir entre justificar 99,9% ou reduzir para 99,5%"
+    },
+    {
+      "finding_title": "Violação de Política de Armazenamento Seguro",
+      "finding_type": "constraint_violation",
+      "severity": "critical",
+      "confidence": 10,
+      "requirements": ["REQ-07"],
+      "constraint_id": "SEG-01",
+      "evidence_requirement": "A tela de consulta de fornecedores deve exibir a todos os compradores a conta bancaria completa do fornecedor e o CPF do seu representante legal.",
+      "evidence_constraint": "Dados pessoais e bancarios devem ser armazenados criptografados e exibidos mascarados",
+      "compliant_alternatives": [
+        "Exibir dados bancários e CPF mascarados para todos os compradores"
+      ],
+      "decision_needed": "Decidir entre mascarar dados ou limitar o acesso a perfis autorizados"
+    },
+    {
+      "finding_title": "Uso Indevido do Banco de Dados Externo",
+      "finding_type": "constraint_violation",
+      "severity": "critical",
+      "confidence": 10,
+      "requirements": ["REQ-04"],
+      "constraint_id": "ARQ-03",
+      "evidence_requirement": "O portal deve consultar diretamente a tabela de fornecedores no banco de dados do ERP.",
+      "evidence_constraint": "E vedado acessar diretamente o banco de dados de outro sistema",
+      "compliant_alternatives": [
+        "Utilizar uma API para consultar fornecedores no ERP"
+      ],
+      "decision_needed": "Decidir entre implementar API ou buscar aprovação para exceção"
+    },
+    {
+      "finding_title": "Violação de Política de Logs",
+      "finding_type": "constraint_violation",
+      "severity": "major",
+      "confidence": 8,
+      "requirements": ["REQ-09"],
+      "constraint_id": "CUS-01",
+      "evidence_requirement": "Os logs do portal devem ser mantidos por 90 dias no armazenamento padrao e, depois, arquivados em camada de armazenamento de baixo custo por 5 anos, prazo exigido pela auditoria interna.",
+      "evidence_constraint": "Logs de aplicacao devem ser mantidos em armazenamento padrao por no maximo 90 dias",
+      "compliant_alternatives": [
+        "Restringir arquivo de logs a situações exigidas por exigências legais ou de auditoria"
+      ],
+      "decision_needed": "Decidir entre ajustar prazo ou reavaliar exigências da auditoria interna"
+    },
+    {
+      "finding_title": "Violação de Política de Ambientes Não Produtivos",
+      "finding_type": "constraint_violation",
+      "severity": "critical",
+      "confidence": 10,
+      "requirements": ["REQ-12"],
+      "constraint_id": "CUS-02",
+      "evidence_requirement": "O ambiente de homologacao deve permanecer ligado 24 horas por dia, 7 dias por semana, para executar os testes automatizados noturnos.",
+      "evidence_constraint": "Ambientes nao produtivos devem ser desligados fora do horario comercial",
+      "compliant_alternatives": [
+        "Programar o desligamento automático de ambientes não produtivos fora do horário comercial"
+      ],
+      "decision_needed": "Decidir entre buscar aprovação para exceção ou adaptar setup de testes"
+    },
+    {
+      "finding_title": "Acesso Indevido com Autenticação Própria",
+      "finding_type": "constraint_violation",
+      "severity": "critical",
+      "confidence": 10,
+      "requirements": ["REQ-10"],
+      "constraint_id": "ARQ-02",
+      "evidence_requirement": "Os compradores da Empresa Alfa devem acessar o portal com usuario e senha proprios do portal, criados pelo administrador.",
+      "evidence_constraint": "A autenticacao de usuarios internos deve ocorrer exclusivamente pelo login unico corporativo (SSO)",
+      "compliant_alternatives": [
+        "Implementar autenticação SSO corporativo no portal"
+      ],
+      "decision_needed": "Decidir entre buscar integração SSO ou aprovar uma exceção"
+    }
+  ],
+  "findings_by_principle": {
+    "D": [],
+    "F": [],
+    "O": [],
+    "S": [],
+    "P": [],
+    "A": [],
+    "M": [
+      {
+        "finding_title": "Exclusão Prematura de Documentos Fiscais",
+        "finding_type": "missing_nfr",
+        "confidence": 10,
+        "severity": "major",
+        "requirements": ["REQ-08"],
+        "what_is_missing": "Documento fiscal deve ser armazenado por 5 anos conforme exigências fiscais",
+        "where_expected": "O arquivo de requerimento de armazenamento deve refletir o padrão regulatório requerido",
+        "impact": "Risco de descumprimento legal e possíveis sanções",
+        "reasoning": "A redução do prazo de armazenamento pode comprometer a conformidade fiscal",
+        "recommendation": "Reajustar o tempo de armazenamento para 5 anos para atender obrigações fiscais"
+      }
+    ] 
+  }
+}

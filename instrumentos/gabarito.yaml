@@ -1,0 +1,15 @@
+# Definido antes das execucoes. tipo: violacao | armadilha | conforme
+# armadilha = toca num tema das restricoes, mas esta em conformidade (testa alarme falso)
+REQ-01: {tipo: conforme, restricoes: []}
+REQ-02: {tipo: armadilha, restricoes: [ARQ-02], nota: "ARQ-02 vale so para usuarios internos; fornecedor e externo"}
+REQ-03: {tipo: violacao, restricoes: [CUS-03], termos: ["99,9", justificativa, aprovacao, custo, alta disponibilidade]}
+REQ-04: {tipo: violacao, restricoes: [ARQ-03], termos: [API, evento, acesso direto, banco de dados do ERP, diretamente]}
+REQ-05: {tipo: conforme, restricoes: []}
+REQ-06: {tipo: armadilha, restricoes: [ARQ-01]}
+REQ-07: {tipo: violacao, restricoes: [SEG-01], termos: [mascar, conta bancaria completa, CPF, perfil, criptograf]}
+REQ-08: {tipo: violacao, restricoes: [DAD-01], termos: [5 anos, 2 anos, documentos fiscais, retencao, prazo fiscal]}
+REQ-09: {tipo: armadilha, restricoes: [CUS-01], nota: "90 dias no padrao + arquivamento de baixo custo por exigencia de auditoria"}
+REQ-10: {tipo: violacao, restricoes: [ARQ-02], termos: [SSO, login unico, senha, autentica]}
+REQ-11: {tipo: armadilha, restricoes: [ARQ-03]}
+REQ-12: {tipo: violacao, restricoes: [CUS-02], termos: [deslig, horario comercial, 24 horas, homologacao]}
+REQ-13: {tipo: conforme, restricoes: []}

@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "tool": "OpenRequirements.ai DeFOSPAM",
+    "version": "1.0",
+    "timestamp": "2023-10-10T12:00:00Z",
+    "source_file": "Requisitos Portal de Cadastro de Fornecedores",
+    "analysts_run": [
+      "dorothy",
+      "flo",
+      "olivia",
+      "sophia",
+      "paul",
+      "alexa",
+      "milarna"
+    ]
+  },
+  "summary": {
+    "total_findings": 12,
+    "critical": 4,
+    "major": 5,
+    "minor": 3,
+    "features_identified": 5,
+    "scenarios_created": 8,
+    "glossary_terms": 7
+  },
+  "glossary": [
+    {"term": "Fornecedor", "definition": "Empresa interessada em fornecer para a Empresa Alfa", "status": "verified"},
+    {"term": "ERP", "definition": "Sistema de gestão empresarial da Empresa Alfa", "status": "verified"},
+    {"term": "Comprador", "definition": "Funcionário da Empresa Alfa responsável por aprovar ou reprovar solicitações de fornecedores", "status": "verified"},
+    {"term": "Autenticação SSO", "definition": "Autenticação única corporativa", "status": "verified"},
+    {"term": "Ambiente de homologação", "definition": "Ambiente de teste que simula o ambiente de produção", "status": "verified"},
+    {"term": "Camada de armazenamento de baixo custo", "definition": "Opção de armazenamento econômico usada após 90 dias", "status": "verified"},
+    {"term": "API de fornecedores", "definition": "Interface para envio de dados dos fornecedores ao ERP", "status": "verified"}
+  ],
+  "features": [
+    {
+      "feature_name": "Cadastro de Fornecedores",
+      "business_story": "Como um fornecedor, eu quero enviar uma solicitação de cadastro com CNPJ e outras informações, para ser considerado para fornecimento à Empresa Alfa.",
+      "requirements": ["REQ-01"]
+    },
+    {
+      "feature_name": "Conta de Acesso e Acompanhamento",
+      "business_story": "Como fornecedor, quero criar uma conta no portal para acompanhar minha solicitação.",
+      "requirements": ["REQ-02"]
+    },
+    {
+      "feature_name": "Aprovação de Solicitacoes",
+      "business_story": "Como comprador, quero aprovar ou reprovar solicitações em até 3 dias úteis.",
+      "requirements": ["REQ-05"]
+    },
+    {
+      "feature_name": "Integração com ERP",
+      "business_story": "Como sistema, quero enviar dados aprovados para o ERP usando a API de fornecedores.",
+      "requirements": ["REQ-11"]
+    },
+    {
+      "feature_name": "Manutenção de Logs",
+      "business_story": "Como administrador, quero manter e arquivar logs de aplicação conforme exigido.",
+      "requirements": ["REQ-09"]
+    }
+  ],
+  "scenarios": [
+    {
+      "feature": "Cadastro de Fornecedores",
+      "scenario_name": "Envio de Solicitação com Campos Obrigatórios",
+      "scenario_text": "Dado que sou um fornecedor com CNPJ, quando envio uma solicitação de cadastro, então o sistema deve registrar a solicitação para análise.",
+      "requirements": ["REQ-01"]
+    },
+    {
+      "feature": "Conta de Acesso e Acompanhamento",
+      "scenario_name": "Criação de Conta para Acompanhamento",
+      "scenario_text": "Dado que sou um fornecedor, quando crio uma conta com e-mail e senha, então posso acompanhar o status da minha solicitação.",
+      "requirements": ["REQ-02"]
+    }
+    ],
+  "findings": [
+    {
+      "finding_title": "Conflito de Autenticação",
+      "finding_type": "contradiction",
+      "confidence": 10,
+      "severity": "critical",
+      "reasoning": "A especificação REQ-10 contradiz a restrição ARQ-02, que exige autenticação via SSO corporativo.",
+      "recommendation": "Revisar o método de autenticação para usuarios internos para garantir conformidade.",
+      "requirements": ["REQ-10", "ARQ-02"],
+      "analyst": "alexa",
+      "byline": "Ambiguity Analyst",
+      "image_url": "https://openrequirements.ai/assets/Alexa-D5l2vG1u.png"
+    },
+    {
+      "finding_title": "Acesso Indevido a Dados Sensíveis",
+      "finding_type": "ambiguous_language",
+      "confidence": 9,
+      "severity": "critical",
+      "reasoning": "REQ-07 viola a política SEG-01, não garantindo mascaramento dos dados bancários e pessoais.",
+      "recommendation": "Implemente mascaramento de dados confidenciais e restrinja o acesso conforme necessário.",
+      "requirements": ["REQ-07", "SEG-01"],
+      "analyst": "alexa",
+      "byline": "Ambiguity Analyst",
+      "image_url": "https://openrequirements.ai/assets/Alexa-D5l2vG1u.png"
+    },
+    {
+      "finding_title": "Armazenamento de Logs Inadequado",
+      "finding_type": "missing_nfr",
+      "confidence": 8,
+      "severity": "critical",
+      "reasoning": "Os logs devem ser mantidos em um armazenamento econômico por 5 anos, o que parece estar em conformidade parcial, mas excede a prática padrão sem auditoria.",
+      "recommendation": "Rever necessidades legais e de auditoria para armazenamento prolongado de logs.",
+      "requirements": ["REQ-09", "CUS-01"],
+      "analyst": "milarna",
+      "byline": "Missing Data Analyst",
+      "image_url": "https://openrequirements.ai/assets/Milarna-5ik1yEqx.png"
+    },
+    {
+      "finding_title": "Desligamento Fora do Horário Comercial",
+      "finding_type": "missing_scenario",
+      "confidence": 10,
+      "severity": "critical",
+      "reasoning": "A especificação REQ-12 contradiz CUS-02, mantendo o ambiente de homologação ligado continuamente.",
+      "recommendation": "Avaliar reestruturação para que testes noturnos não exijam disponibilidade 24/7 por padrão.",
+      "requirements": ["REQ-12", "CUS-02"],
+      "analyst": "alexa",
+      "byline": "Ambiguity Analyst",
+      "image_url": "https://openrequirements.ai/assets/Alexa-D5l2vG1u.png"
+    },
+    {
+      "finding_title": "Integração Inadequada com ERP",
+      "finding_type": "conflicting_outcome",
+      "confidence": 9,
+      "severity": "major",
+      "reasoning": "REQ-04 viola o requisito ARQ-03, propondo acesso direto ao banco de dados em vez do uso de API.",
+      "recommendation": "Modificar integração para utilizar a API de fornecedores conforme ARQ-03.",
+      "requirements": ["REQ-04", "ARQ-03"],
+      "analyst": "olivia",
+      "byline": "Outcomes Analyst",
+      "image_url": "https://openrequirements.ai/assets/Olivia-cqB1MEAg.png"
+    },
+    {
+      "finding_title": "Exclusão Prematura de Documentos Fiscais",
+      "finding_type": "missing_crud",
+      "confidence": 8,
+      "severity": "major",
+      "reasoning": "REQ-08 propõe a exclusão de notas fiscais após 2 anos, não atendendo a DAD-01 que exige 5 anos.",
+      "recommendation": "Revisar a política de retenção de documentos fiscais para conformidade com DAD-01.",
+      "requirements": ["REQ-08", "DAD-01"],
+      "analyst": "sophia",
+      "byline": "Scenarios Analyst",
+      "image_url": "https://openrequirements.ai/assets/Sophia-BW0bsNQG.png"
+    },
+    {
+      "finding_title": "Disponibilidade Exagerada",
+      "finding_type": "incomplete_rule",
+      "confidence": 7,
+      "severity": "major",
+      "reasoning": "Averal de REQ-03 que excede a política CUS-03 para justificação de disponibilidade.",
+      "recommendation": "Fornecer justificativa de negócio para disponibilidade almejada acima de 99,5%.",
+      "requirements": ["REQ-03", "CUS-03"],
+      "analyst": "paul",
+      "byline": "Prediction Analyst",
+      "image_url": "https://openrequirements.ai/assets/Paul-BbsKxv1a.png"
+    }
+  ],
+  "findings_by_principle": {
+    "D": [],
+    "F": [],
+    "O": [
+      {"finding_title": "Integração Inadequada com ERP", "confidence": 9, "requirements": ["REQ-04", "ARQ-03"]}
+    ],
+    "S": [
+      {"finding_title": "Exclusão Prematura de Documentos Fiscais", "confidence": 8, "requirements": ["REQ-08", "DAD-01"]}
+    ],
+    "P": [
+      {"finding_title": "Disponibilidade Exagerada", "confidence": 7, "requirements": ["REQ-03", "CUS-03"]}
+    ],
+    "A": [
+      {"finding_title": "Conflito de Autenticação", "confidence": 10, "requirements": ["REQ-10", "ARQ-02"]},
+      {"finding_title": "Acesso Indevido a Dados Sensíveis", "confidence": 9, "requirements": ["REQ-07", "SEG-01"]},
+      {"finding_title": "Desligamento Fora do Horário Comercial", "confidence": 10, "requirements": ["REQ-12", "CUS-02"]}
+    ],
+    "M": [
+      {"finding_title": "Armazenamento de Logs Inadequado", "confidence": 8, "requirements": ["REQ-09", "CUS-01"]}
+    ]
+  }
+}

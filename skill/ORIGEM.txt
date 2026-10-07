@@ -1,0 +1,2 @@
+SKILL.md copiado sem alteracoes de https://github.com/AgenticTesting/OpenRequirementsAI
+commit 40ab291cdc8ff61cf96d6cedadc0f7472efe5fff (21/04/2026), licenca MIT (ver LICENSE_OpenRequirementsAI.txt)

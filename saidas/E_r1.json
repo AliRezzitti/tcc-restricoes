@@ -1,0 +1,250 @@
+{
+  "metadata": {
+    "tool": "OpenRequirements.ai DeFOSPAM",
+    "version": "1.0",
+    "timestamp": "2023-10-05T12:00:00Z",
+    "source_file": "requirements",
+    "analysts_run": ["dorothy", "flo", "olivia", "sophia", "paul", "alexa", "milarna"]
+  },
+  "summary": {
+    "total_findings": 8,
+    "critical": 5,
+    "major": 2,
+    "minor": 1,
+    "features_identified": 4,
+    "scenarios_created": 7,
+    "glossary_terms": 3
+  },
+  "glossary": [
+    {
+      "term": "fornecedor",
+      "definition": "Empresa interessada em se cadastrar no portal da Empresa Alfa.",
+      "verification_status": "verify",
+      "source": "REQ-01"
+    },
+    {
+      "term": "comprador",
+      "definition": "Funcionario da Empresa Alfa responsavel pela analise das solicitacoes de cadastro dos fornecedores.",
+      "verification_status": "verify",
+      "source": "REQ-05"
+    },
+    {
+      "term": "ERP",
+      "definition": "Sistema de gestao empresarial da Empresa Alfa.",
+      "verification_status": "verify",
+      "source": "REQ-01"
+    }
+  ],
+  "features": [
+    {
+      "feature_name": "Solicitacao de Cadastro de Fornecedor",
+      "business_story": "Como um fornecedor, quero enviar uma solicitacao de cadastro para que eu possa fornecer para a Empresa Alfa.",
+      "requirements": ["REQ-01", "REQ-04", "REQ-13"]
+    },
+    {
+      "feature_name": "Criacao de Conta no Portal",
+      "business_story": "Como um fornecedor, quero criar uma conta no portal para acompanhar minha solicitacao.",
+      "requirements": ["REQ-02"]
+    },
+    {
+      "feature_name": "Aprovacao de Solicitacao de Fornecedores",
+      "business_story": "Como um comprador, quero aprovar ou reprovar as solicitacoes de cadastro para garantir que apenas fornecedores qualificados sejam aceitos.",
+      "requirements": ["REQ-05", "REQ-06"]
+    },
+    {
+      "feature_name": "Envio de Dados ao ERP",
+      "business_story": "Como sistema do portal, quero enviar os dados dos fornecedores aprovados ao ERP para integracao automatizada.",
+      "requirements": ["REQ-11"]
+    }
+  ],
+  "scenarios": [
+    {
+      "feature": "Solicitacao de Cadastro de Fornecedor",
+      "scenario_text": "Cenário: Envio de solicitacao de cadastro\nDado que o fornecedor tenha todos os documentos exigidos,\nE preencheu corretamente o formulario de cadastro,\nQuando envia a solicitacao de cadastro,\nEntao a solicitacao deve ser registrada no sistema e uma mensagem de confirmacao enviada por e-mail.",
+      "requirements": ["REQ-01", "REQ-13"]
+    },
+    {
+      "feature": "Criacao de Conta no Portal",
+      "scenario_text": "Cenário: Criacao de conta do fornecedor\nDado que o fornecedor informe um e-mail único,\nE escolha uma senha segura,\nQuando cria a conta no portal,\nEntao a conta deve ser criada e um e-mail de confirmacao enviado.",
+      "requirements": ["REQ-02"]
+    },
+    {
+      "feature": "Aprovacao de Solicitacao de Fornecedores",
+      "scenario_text": "Cenário: Aprovacao de solicitacao de fornecedor\nDado que o comprador recebeu uma nova solicitacao,\nE a solicitacao foi revisada,\nQuando o comprador aprova a solicitacao,\nEntao o fornecedor é notificado por e-mail.",
+      "requirements": ["REQ-05", "REQ-13"]
+    }
+  ],
+  "findings": [
+    {
+      "finding_title": "Violação da política de autenticação",
+      "finding_type": "constraint_violation",
+      "confidence": 10,
+      "severity": "critical",
+      "requirements": ["REQ-02", "REQ-10"],
+      "evidence_requirement": "REQ-02: Os fornecedores devem criar uma conta no portal, com e-mail e senha, para acompanhar a sua solicitacao.\nREQ-10: Os compradores da Empresa Alfa devem acessar o portal com usuario e senha proprios do portal, criados pelo administrador.",
+      "evidence_constraint": "ARQ-02: A autenticacao de usuarios internos deve ocorrer exclusivamente pelo login unico corporativo (SSO).",
+      "compliant_alternatives": [
+        "Integrar o portal ao SSO corporativo para evitar cadastros proprios.",
+        "Permitir acesso por e-mail e senha apenas a fornecedores externos, e integrar autenticação de compradores ao SSO."
+      ],
+      "decision_needed": "Decidir entre integrar ao SSO ou justificar a necessidade de autenticacao separada ao comite."
+    },
+    {
+      "finding_title": "Armazenamento fora do prazo exigido",
+      "finding_type": "constraint_violation",
+      "confidence": 10,
+      "severity": "critical",
+      "requirements": ["REQ-08"],
+      "evidence_requirement": "REQ-08: As notas fiscais dos fornecedores devem ser excluidas 2 anos apos o pagamento, para reduzir o custo de armazenamento.",
+      "evidence_constraint": "DAD-01: Comprovantes e documentos fiscais devem ser mantidos por 5 anos, por exigencia fiscal.",
+      "compliant_alternatives": [
+        "Alterar o requisito para manter as notas fiscais por 5 anos conforme a legislação atual."
+      ],
+      "decision_needed": "Modificar a política de retenção para estar em conformidade com a exigência fiscal."
+    },
+    {
+      "finding_title": "Violação das restrições de arquitetura",
+      "finding_type": "constraint_violation",
+      "confidence": 10,
+      "severity": "major",
+      "requirements": ["REQ-04"],
+      "evidence_requirement": "REQ-04: O portal deve consultar diretamente a tabela de fornecedores no banco de dados do ERP.",
+      "evidence_constraint": "ARQ-03: E vedado acessar diretamente o banco de dados de outro sistema.",
+      "compliant_alternatives": [
+        "Utilizar a API de consulta de fornecedores fornecida pelo ERP."
+      ],
+      "decision_needed": "Modificar a integração para utilizar APIs em vez de acesso direto ao banco de dados."
+    },
+    {
+      "finding_title": "Exposição de dados pessoais desprotegidos",
+      "finding_type": "constraint_violation",
+      "confidence": 10,
+      "severity": "major",
+      "requirements": ["REQ-07"],
+      "evidence_requirement": "REQ-07: A tela de consulta de fornecedores deve exibir a todos os compradores a conta bancaria completa do fornecedor e o CPF do seu representante legal.",
+      "evidence_constraint": "SEG-01: Dados pessoais e bancarios devem ser armazenados criptografados e exibidos mascarados.",
+      "compliant_alternatives": [
+        "Mascarar dados sensíveis na interface de usuário, restringindo o acesso completo aos registros às funções autorizadas."
+      ],
+      "decision_needed": "Implementar mascaramento de dados para conformidade com a política de segurança."
+    },
+    {
+      "finding_title": "Exigência de armazenamento inconsistente com a política",
+      "finding_type": "constraint_violation",
+      "confidence": 9,
+      "severity": "minor",
+      "requirements": ["REQ-09"],
+      "evidence_requirement": "REQ-09: Os logs do portal devem ser mantidos por 90 dias no armazenamento padrao e, depois, arquivados em camada de armazenamento de baixo custo por 5 anos, prazo exigido pela auditoria interna.",
+      "evidence_constraint": "CUS-01: Logs de aplicacao devem ser mantidos em armazenamento padrao por no maximo 90 dias.",
+      "compliant_alternatives": [
+        "Arquivar somente logs necessários para conformidade legal ou auditoria, ajustando o prazo conforme necessidade."
+      ],
+      "decision_needed": "Ajustar políticas de retenção de logs para estar alinhada com requisitos de auditoria e armazenamento padrão."
+    },
+    {
+      "finding_title": "Manutenção inadequada de ambientes não produtivos",
+      "finding_type": "constraint_violation",
+      "confidence": 9,
+      "severity": "minor",
+      "requirements": ["REQ-12"],
+      "evidence_requirement": "REQ-12: O ambiente de homologacao deve permanecer ligado 24 horas por dia, 7 dias por semana, para executar os testes automatizados noturnos.",
+      "evidence_constraint": "CUS-02: Ambientes nao produtivos devem ser desligados fora do horario comercial.",
+      "compliant_alternatives": [
+        "Configurar o ambiente de homologacao para desligamento fora do horario comercial, com exceção para janelas de testes específicos aprovados."
+      ],
+      "decision_needed": "Decidir sobre a justificativa necessária para manter o ambiente ligado fora do horário comercial."
+    }
+  ],
+  "findings_by_principle": {
+    "D": [],
+    "F": [],
+    "O": [],
+    "S": [],
+    "P": [],
+    "A": [],
+    "M": []
+  },
+  "constraint_check": [
+    {
+      "requirement": "REQ-01",
+      "status": "compliant",
+      "constraint_ids": []
+    },
+    {
+      "requirement": "REQ-02",
+      "status": "violation",
+      "constraint_ids": ["ARQ-02"],
+      "evidence_requirement": "Os fornecedores devem criar uma conta no portal, com e-mail e senha, para acompanhar a sua solicitacao.",
+      "evidence_constraint": "A autenticacao de usuarios internos deve ocorrer exclusivamente pelo login unico corporativo (SSO)."
+    },
+    {
+      "requirement": "REQ-03",
+      "status": "violation",
+      "constraint_ids": ["CUS-03"],
+      "evidence_requirement": "O portal deve ficar disponivel 99,9% do tempo.",
+      "evidence_constraint": "Disponibilidade acima de 99,5% exige justificativa de negocio e aprovacao previa da area de custos."
+    },
+    {
+      "requirement": "REQ-04",
+      "status": "violation",
+      "constraint_ids": ["ARQ-03"],
+      "evidence_requirement": "O portal deve consultar diretamente a tabela de fornecedores no banco de dados do ERP.",
+      "evidence_constraint": "E vedado acessar diretamente o banco de dados de outro sistema."
+    },
+    {
+      "requirement": "REQ-05",
+      "status": "compliant",
+      "constraint_ids": []
+    },
+    {
+      "requirement": "REQ-06",
+      "status": "compliant",
+      "constraint_ids": []
+    },
+    {
+      "requirement": "REQ-07",
+      "status": "violation",
+      "constraint_ids": ["SEG-01"],
+      "evidence_requirement": "A tela de consulta de fornecedores deve exibir a todos os compradores a conta bancaria completa do fornecedor e o CPF do seu representante legal.",
+      "evidence_constraint": "Dados pessoais e bancarios devem ser armazenados criptografados e exibidos mascarados."
+    },
+    {
+      "requirement": "REQ-08",
+      "status": "violation",
+      "constraint_ids": ["DAD-01"],
+      "evidence_requirement": "As notas fiscais dos fornecedores devem ser excluidas 2 anos apos o pagamento, para reduzir o custo de armazenamento.",
+      "evidence_constraint": "Comprovantes e documentos fiscais devem ser mantidos por 5 anos, por exigencia fiscal."
+    },
+    {
+      "requirement": "REQ-09",
+      "status": "violation",
+      "constraint_ids": ["CUS-01"],
+      "evidence_requirement": "Os logs do portal devem ser mantidos por 90 dias no armazenamento padrao e, depois, arquivados em camada de armazenamento de baixo custo por 5 anos, prazo exigido pela auditoria interna.",
+      "evidence_constraint": "Logs de aplicacao devem ser mantidos em armazenamento padrao por no maximo 90 dias."
+    },
+    {
+      "requirement": "REQ-10",
+      "status": "violation",
+      "constraint_ids": ["ARQ-02"],
+      "evidence_requirement": "Os compradores da Empresa Alfa devem acessar o portal com usuario e senha proprios do portal, criados pelo administrador.",
+      "evidence_constraint": "A autenticacao de usuarios internos deve ocorrer exclusivamente pelo login unico corporativo (SSO)."
+    },
+    {
+      "requirement": "REQ-11",
+      "status": "compliant",
+      "constraint_ids": []
+    },
+    {
+      "requirement": "REQ-12",
+      "status": "violation",
+      "constraint_ids": ["CUS-02"],
+      "evidence_requirement": "O ambiente de homologacao deve permanecer ligado 24 horas por dia, 7 dias por semana, para executar os testes automatizados noturnos.",
+      "evidence_constraint": "Ambientes nao produtivos devem ser desligados fora do horario comercial."
+    },
+    {
+      "requirement": "REQ-13",
+      "status": "compliant",
+      "constraint_ids": []
+    }
+  ]
+}

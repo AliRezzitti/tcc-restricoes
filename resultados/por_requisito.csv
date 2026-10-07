@@ -1,0 +1,14 @@
+requisito,tipo,restricoes,O: apontou violação da restrição esperada,O: apontou violação de outra restrição,O: levantou dúvida ou risco,O: não apontou nada,E: apontou violação da restrição esperada,E: apontou violação de outra restrição,E: levantou dúvida ou risco,E: não apontou nada
+REQ-01,conforme,,0,0,0,3,0,0,0,3
+REQ-02,armadilha,ARQ-02,0,0,0,3,0,3,0,0
+REQ-03,violacao,CUS-03,3,0,0,0,3,0,0,0
+REQ-04,violacao,ARQ-03,3,0,0,0,3,0,0,0
+REQ-05,conforme,,0,0,0,3,0,0,0,3
+REQ-06,armadilha,ARQ-01,0,0,0,3,0,0,0,3
+REQ-07,violacao,SEG-01,3,0,0,0,3,0,0,0
+REQ-08,violacao,DAD-01,3,0,0,0,3,0,0,0
+REQ-09,armadilha,CUS-01,0,2,1,0,0,3,0,0
+REQ-10,violacao,ARQ-02,3,0,0,0,3,0,0,0
+REQ-11,armadilha,ARQ-03,0,0,0,3,0,0,0,3
+REQ-12,violacao,CUS-02,2,0,0,1,3,0,0,0
+REQ-13,conforme,,0,0,0,3,0,0,0,3

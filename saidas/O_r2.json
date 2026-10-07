@@ -1,0 +1,200 @@
+{
+  "metadata": {
+    "tool": "OpenRequirements.ai DeFOSPAM",
+    "version": "1.0",
+    "timestamp": "2023-10-01T12:00:00Z",
+    "source_file": "requirements.md",
+    "analysts_run": ["dorothy", "flo", "olivia", "sophia", "paul", "alexa", "milarna"]
+  },
+  "summary": {
+    "total_findings": 8,
+    "critical": 3,
+    "major": 3,
+    "minor": 2,
+    "features_identified": 5,
+    "scenarios_created": 7,
+    "glossary_terms": 12
+  },
+  "glossary": [
+    {
+      "termo": "Portal",
+      "definicao": "Interface onde fornecedores podem se cadastrar para realizar negócios com a Empresa Alfa.",
+      "status": "unverified",
+      "fonte": "requirements"
+    }
+    ],
+  "features": [
+    {
+      "feature_name": "Cadastro de Fornecedor",
+      "business_story": "Como fornecedor, quero enviar meu cadastro completo para que possa ser analisado pela Empresa Alfa.",
+      "requirements": ["REQ-01", "REQ-02"]
+    }
+    ],
+  "scenarios": [
+    {
+      "scenario": "Cadastro com dados válidos",
+      "given": "Um fornecedor com dados completos",
+      "when": "Submete o cadastro no portal",
+      "then": "O sistema aceita e permite acompanhamento pelo portal",
+      "requirements": ["REQ-01", "REQ-02"]
+    }
+  ],
+  "business_stories": [
+    {
+      "feature": "Cadastro de Fornecedor",
+      "stories": [
+        {
+          "scenario": "Cadastro com dados válidos",
+          "given": "Um fornecedor com dados completos",
+          "when": "Submete o cadastro no portal",
+          "then": "O sistema aceita e permite acompanhamento pelo portal"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "finding_title": "Incompatibilidade com política de segurança de dados",
+      "finding_type": "inconsistência",
+      "confidence": 9,
+      "severity": "critical",
+      "requirements": ["REQ-07", "SEG-01"],
+      "text_excerpt": "A tela de consulta de fornecedores deve exibir a todos os compradores a conta bancaria completa do fornecedor e o CPF do seu representante legal.",
+      "interpretation_a": "Dados sensíveis podem ser acessados por qualquer comprador.",
+      "interpretation_b": "Dados são mascarados para todos, exceto para perfis autorizados.",
+      "reasoning": "Exibir dados bancários e CPF completos contraria as políticas de segurança que exigem criptografia e mascaramento.",
+      "recommendation": "Reveja as permissões de acesso e assegure o mascaramento dos dados sensíveis."
+    },
+    {
+      "finding_title": "Requisito de infraestrutura não compatível",
+      "finding_type": "inconsistência",
+      "confidence": 8,
+      "severity": "major",
+      "requirements": ["REQ-03", "CUS-03"],
+      "text_excerpt": "O portal deve ficar disponível 99,9% do tempo.",
+      "interpretation_a": "Disponibilidade alta já é justificada.",
+      "interpretation_b": "Necessária aprovação explicitada da área de custos.",
+      "reasoning": "A disponibilidade de 99,9% pode incorrer em custos elevados, requerendo justificativa e aprovação conforme a política de custos.",
+      "recommendation": "Obtenha aprovação da área de custos para a meta de disponibilidade especificada."
+    },
+    {
+      "finding_title": "Acesso direto a banco de dados externo",
+      "finding_type": "inconsistência",
+      "confidence": 10,
+      "severity": "critical",
+      "requirements": ["REQ-04", "ARQ-03"],
+      "text_excerpt": "Consultar diretamente a tabela de fornecedores no banco de dados do ERP.",
+      "interpretation_a": "ERP permite acesso direto.",
+      "interpretation_b": "ERP publica APIs para acesso.",
+      "reasoning": "A política de arquitetura proíbe o acesso direto a bancos de dados de outros sistemas, requerendo uso de APIs.",
+      "recommendation": "Utilize a API de fornecedores do ERP para a consulta."
+    },
+    {
+      "finding_title": "Desconformidade com tempo de retenção de logs",
+      "finding_type": "inconsistência",
+      "confidence": 10,
+      "severity": "critical",
+      "requirements": ["REQ-09", "CUS-01"],
+      "text_excerpt": "Logs do portal devem ser mantidos por 90 dias no armazenamento padrão e arquivados por 5 anos, prazo exigido pela auditoria interna.",
+      "interpretation_a": "Logs arquivados por 5 anos por padrão.",
+      "interpretation_b": "Retenção de logs só em casos exigidos por lei/auditoria.",
+      "reasoning": "Política permite retenção estendida só quando exigido legalmente, mas requisito impõe 5 anos sem exceções.",
+      "recommendation": "Reveja necessidade de retenção de 5 anos conforme os requisitos regulatórios/legais."
+    },
+    {
+      "finding_title": "Definição de autenticação inconsistente",
+      "finding_type": "inconsistência",
+      "confidence": 9,
+      "severity": "major",
+      "requirements": ["REQ-10", "ARQ-02"],
+      "text_excerpt": "Compradores acessam o portal com usuário e senha próprios.",
+      "interpretation_a": "Usuários internos com cadastro próprio.",
+      "interpretation_b": "Usuários internos devem usar SSO corporativo.",
+      "reasoning": "A exigência do uso de autenticação própria para usuários internos conflita com a regra de login único.",
+      "recommendation": "Adote o SSO corporativo para autenticação de usuários internos."
+    },
+    {
+      "finding_title": "Retenção inadequada de documentos fiscais",
+      "finding_type": "inconsistência",
+      "confidence": 9,
+      "severity": "major",
+      "requirements": ["REQ-08", "DAD-01"],
+      "text_excerpt": "Notas fiscais dos fornecedores devem ser excluídas 2 anos após o pagamento.",
+      "interpretation_a": "Notas fiscais retidas por período menor que o exigido.",
+      "interpretation_b": "Fornecedor pode reter notas fiscais conforme necessidade.",
+      "reasoning": "Política fiscal requer retenção de documentos fiscais por 5 anos, mas o requisito define apenas 2 anos.",
+      "recommendation": "Revise o prazo de retenção de documentos fiscais para atender exigências fiscais."
+    },
+    {
+      "finding_title": "Desperdício de custos em ambiente de homologação",
+      "finding_type": "inconsistência",
+      "confidence": 8,
+      "severity": "minor",
+      "requirements": ["REQ-12", "CUS-02"],
+      "text_excerpt": "Ambiente de homologação fica ligado 24/7.",
+      "interpretation_a": "Ambiente mantém operação contínua fora do horário comercial.",
+      "interpretation_b": "Ambiente deve ser desligado fora do horário para economizar custos.",
+      "reasoning": "Manter o ambiente de homologação ligado constantemente gera custos adicionais não justificados.",
+      "recommendation": "Considere desligar ambientes não produtivos fora do horário comercial."
+    },
+    {
+      "finding_title": "Potencial de conflitos de definição de termo",
+      "finding_type": "ambiguity",
+      "confidence": 8,
+      "severity": "minor",
+      "requirements": ["REQ-01", "REQ-02"],
+      "text_excerpt": "Cadastro de fornecedor.",
+      "interpretation_a": "Cadastro inclui somente dados básicos.",
+      "interpretation_b": "Cadastro requer dados completos com verificação documental.",
+      "reasoning": "Usar termos gerais como 'Cadastro de fornecedor' sem definição clara pode causar confusão sobre o escopo dos dados requeridos.",
+      "recommendation": "Especifique e padronize quais dados compõem o 'Cadastro de fornecedor' no contexto relevante."
+    }
+  ],
+  "findings_by_principle": {
+    "D": [],
+    "F": [],
+    "O": [],
+    "S": [],
+    "P": [],
+    "A": [
+      {
+        "finding_title": "Potencial de conflitos de definição de termo",
+        "finding_type": "ambiguity",
+        "confidence": 8,
+        "severity": "minor",
+        "requirements": ["REQ-01", "REQ-02"],
+        "text_excerpt": "Cadastro de fornecedor.",
+        "interpretation_a": "Cadastro inclui somente dados básicos.",
+        "interpretation_b": "Cadastro requer dados completos com verificação documental.",
+        "reasoning": "Usar termos gerais como 'Cadastro de fornecedor' sem definição clara pode causar confusão sobre o escopo dos dados requeridos.",
+        "recommendation": "Especifique e padronize quais dados compõem o 'Cadastro de fornecedor' no contexto relevante."
+      }
+    ],
+    "M": [
+      {
+        "finding_title": "Incompatibilidade com política de segurança de dados",
+        "finding_type": "inconsistência",
+        "confidence": 9,
+        "severity": "critical",
+        "requirements": ["REQ-07", "SEG-01"],
+        "text_excerpt": "A tela de consulta de fornecedores deve exibir a todos os compradores a conta bancaria completa do fornecedor e o CPF do seu representante legal.",
+        "interpretation_a": "Dados sensíveis podem ser acessados por qualquer comprador.",
+        "interpretation_b": "Dados são mascarados para todos, exceto para perfis autorizados.",
+        "reasoning": "Exibir dados bancários e CPF completos contraria as políticas de segurança que exigem criptografia e mascaramento.",
+        "recommendation": "Reveja as permissões de acesso e assegure o mascaramento dos dados sensíveis."
+      },
+      {
+        "finding_title": "Retenção inadequada de documentos fiscais",
+        "finding_type": "inconsistência",
+        "confidence": 9,
+        "severity": "major",
+        "requirements": ["REQ-08", "DAD-01"],
+        "text_excerpt": "Notas fiscais dos fornecedores devem ser excluídas 2 anos após o pagamento.",
+        "interpretation_a": "Notas fiscais retidas por período menor que o exigido.",
+        "interpretation_b": "Fornecedor pode reter notas fiscais conforme necessidade.",
+        "reasoning": "Política fiscal requer retenção de documentos fiscais por 5 anos, mas o requisito define apenas 2 anos.",
+        "recommendation": "Revise o prazo de retenção de documentos fiscais para atender exigências fiscais."
+      }
+    ]
+  }
+}

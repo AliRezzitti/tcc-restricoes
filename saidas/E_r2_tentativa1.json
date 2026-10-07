@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "tool": "OpenRequirements.ai DeFOSPAM",
+    "version": "1.0",
+    "timestamp": "2023-10-01T12:00:00Z",
+    "source_file": "Especificacao de Requisitos: Portal de Cadastro de Fornecedores",
+    "analysts_run": ["dorothy", "flo", "olivia", "sophia", "paul", "alexa", "milarna"]
+  },
+  "summary": {
+    "total_findings": 9,
+    "critical": 6,
+    "major": 3,
+    "minor": 0,
+    "features_identified": 4,
+    "scenarios_created": 8,
+    "glossary_terms": 10
+  },
+  "glossary": [
+    {
+      "term": "Fornecedor",
+      "definition": "Entidade comercial que solicita cadastro para fornecer à Empresa Alfa."
+    },
+    {
+      "term": "CNPJ",
+      "definition": "Cadastro Nacional de Pessoa Jurídica, identificação fiscal de empresas no Brasil."
+    },
+    {
+      "term": "Portal",
+      "definition": "Interface on-line para cadastro e gerenciamento de solicitações de fornecedores."
+    }
+  ],
+  "features": [
+    {
+      "feature_name": "Cadastro de Fornecedores",
+      "business_story": "Como um fornecedor, quero solicitar meu cadastro para poder fornecer à Empresa Alfa."
+    },
+    {
+      "feature_name": "Acompanhamento de Solicitação",
+      "business_story": "Como um fornecedor, quero acompanhar o status da minha solicitação para saber quando ela é aprovada."
+    }
+  ],
+  "scenarios": [
+    {
+      "feature": "Cadastro de Fornecedores",
+      "scenario_text": "Dado que o fornecedor envia a solicitação de cadastro, quando o cadastro for recebido, então ele deve ser armazenado para avaliação."
+    }
+  ],
+  "business_stories": [
+    {
+      "feature": "Cadastro de Fornecedores",
+      "role": "Fornecedor",
+      "action": "solicitar cadastro",
+      "benefit": "fornecer para Empresa Alfa."
+    }
+  ],
+  "findings": [
+    {
+      "finding_title": "Violação da Autenticação SSO (ARQ-02)",
+      "finding_type": "constraint_violation",
+      "confidence": 10,
+      "severity": "critical",
+      "requirements": ["REQ-02", "REQ-10"],
+      "reasoning": "O uso de usuários e senhas próprios do portal, em vez do SSO corporativo, viola ARQ-02.",
+      "recommendation": "Integrar o login do portal com o SSO corporativo.",
+      "constraint_id": "ARQ-02",
+      "evidence_requirement": "O portal deve permitir login com usuário e senha próprios (REQ-02, REQ-10).",
+      "evidence_constraint": "A autenticação de usuários internos deve ocorrer exclusivamente pelo login único corporativo (SSO).",
+      "compliant_alternatives": [
+        "Utilizar o SSO corporativo para a autenticação.",
+        "Atualizar REQ-02 e REQ-10 para integrar com SSO."
+      ],
+      "decision_needed": "Decidir se a aplicação deve integrar com o SSO ou se buscará uma exceção."
+    },
+    {
+      "finding_title": "Violação da Política de Logs (CUS-01)",
+      "finding_type": "constraint_violation",
+      "confidence": 9,
+      "severity": "critical",
+      "requirements": ["REQ-09"],
+      "reasoning": "O armazenamento de logs por 5 anos em camada de baixo custo viola a regra que exige esse armazenamento apenas quando houver exigência legal ou de auditoria.",
+      "recommendation": "Reavaliar a necessidade de armazenar logs por 5 anos sem uma exigência específica.",
+      "constraint_id": "CUS-01",
+      "evidence_requirement": "Os logs do portal devem ser arquivados por 5 anos em camada de baixo custo (REQ-09).",
+      "evidence_constraint": "Logs devem ser arquivados apenas quando houver exigência legal ou de auditoria.",
+      "compliant_alternatives": [
+        "Armazenar logs por 90 dias e arquivar apenas sob demanda legal ou de auditoria."
+      ],
+      "decision_needed": "Decidir se manter os logs por 5 anos ou seguir a prática recomendada pela política."
+    }
+  ],
+  "findings_by_principle": {
+    "D": [],
+    "F": [],
+    "O": [],
+    "S": [],
+    "P": [],
+    "A": [],
+    "M": [
+      {
+        "finding_title": "Requisitos Inconsistentes com Regras de Dados e Segurança",
+        "finding_type": "missing_nfr",
+        "confidence": 8,
+        "severity": "major",
+        "requirements": ["REQ-07", "REQ-08"],
+        "reasoning": "Os dados pessoais devem ser armazenados e exibidos conforme as regras de segurança, mas não estão no texto dos requisitos.",
+        "recommendation": "Atualizar os requisitos para incluir criptografia e mascaramento de dados, conforme SEG-01."
+      }
+    ]
+  },
+  "constraint_check": [
+    {
+      "requirement": "REQ-01",
+      "status": "compliant",
+      "constraint_ids": []
+    },
+    {
+      "requirement": "REQ-02",
+      "status": "violation",
+      "constraint_ids": ["ARQ-02"],
+      "evidence_requirement": "Os fornecedores devem criar uma conta no portal, com e-mail e senha.",
+      "evidence_constraint": "A autenticação de usuários internos deve ocorrer exclusivamente pelo login único corporativo (SSO)."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+arquivo,analista,titulo,requisitos
+E_r1.json,lista final,Violação da política de autenticação,REQ-02 REQ-10
+E_r1.json,lista final,Armazenamento fora do prazo exigido,REQ-08
+E_r1.json,lista final,Violação das restrições de arquitetura,REQ-04
+E_r1.json,lista final,Exposição de dados pessoais desprotegidos,REQ-07
+E_r1.json,lista final,Exigência de armazenamento inconsistente com a política,REQ-09
+E_r1.json,lista final,Manutenção inadequada de ambientes não produtivos,REQ-12
+E_r1.json,lista final,,REQ-02
+E_r1.json,lista final,,REQ-03
+E_r1.json,lista final,,REQ-04
+E_r1.json,lista final,,REQ-07
+E_r1.json,lista final,,REQ-08
+E_r1.json,lista final,,REQ-09
+E_r1.json,lista final,,REQ-10
+E_r1.json,lista final,,REQ-12
+E_r2.json,lista final,Violação da Autenticação SSO (ARQ-02),REQ-02 REQ-10
+E_r2.json,lista final,Violação da Política de Logs (CUS-01),REQ-09
+E_r2.json,lista final,Requisitos Inconsistentes com Regras de Dados e Segurança,REQ-07 REQ-08
+E_r2.json,lista final,,REQ-02
+E_r2.json,lista final,,REQ-03
+E_r2.json,lista final,,REQ-04
+E_r2.json,lista final,,REQ-07
+E_r2.json,lista final,,REQ-08
+E_r2.json,lista final,,REQ-09
+E_r2.json,lista final,,REQ-10
+E_r2.json,lista final,,REQ-12
+E_r3.json,lista final,Violação de Restrição de Autenticação,REQ-02 REQ-10
+E_r3.json,lista final,Violação de Restrição de Armazenamento,REQ-08 REQ-09
+E_r3.json,lista final,Violação de Política de Disponibilidade,REQ-03
+E_r3.json,lista final,Violação de Política de Armazenamento Seguro,REQ-07
+E_r3.json,lista final,Uso Indevido do Banco de Dados Externo,REQ-04
+E_r3.json,lista final,Violação de Política de Logs,REQ-09
+E_r3.json,lista final,Violação de Política de Ambientes Não Produtivos,REQ-12
+E_r3.json,lista final,Acesso Indevido com Autenticação Própria,REQ-10
+E_r3.json,lista final,Exclusão Prematura de Documentos Fiscais,REQ-08
+E_r3.json,lista final,,REQ-02
+E_r3.json,lista final,,REQ-03
+E_r3.json,lista final,,REQ-04
+E_r3.json,lista final,,REQ-07
+E_r3.json,lista final,,REQ-08
+E_r3.json,lista final,,REQ-09
+E_r3.json,lista final,,REQ-10
+E_r3.json,lista final,,REQ-12
+O_r1.json,Alexa,Uso de Autenticação Incorreta para Compradores,REQ-10
+O_r1.json,Milarna,Disponibilidade Indevida Exigida para Portal,REQ-03
+O_r1.json,Alexa,Exclusão de Notas Fiscais Antes do Prazo Legal,REQ-08
+O_r1.json,Paul,Acesso ao Banco de Dados do ERP para Consulta de Duplicados,REQ-04
+O_r1.json,Dorothy,Armazenamento de Dados Financeiros Sensíveis Desprotegido,REQ-07
+O_r1.json,Flo,Período de Arquivamento de Logs Divergente,REQ-09
+O_r2.json,lista final,Incompatibilidade com política de segurança de dados,REQ-07
+O_r2.json,lista final,Requisito de infraestrutura não compatível,REQ-03
+O_r2.json,lista final,Acesso direto a banco de dados externo,REQ-04
+O_r2.json,lista final,Desconformidade com tempo de retenção de logs,REQ-09
+O_r2.json,lista final,Definição de autenticação inconsistente,REQ-10
+O_r2.json,lista final,Retenção inadequada de documentos fiscais,REQ-08
+O_r2.json,lista final,Desperdício de custos em ambiente de homologação,REQ-12
+O_r2.json,lista final,Potencial de conflitos de definição de termo,REQ-01 REQ-02
+O_r3.json,alexa,Conflito de Autenticação,REQ-10
+O_r3.json,alexa,Acesso Indevido a Dados Sensíveis,REQ-07
+O_r3.json,milarna,Armazenamento de Logs Inadequado,REQ-09
+O_r3.json,alexa,Desligamento Fora do Horário Comercial,REQ-12
+O_r3.json,olivia,Integração Inadequada com ERP,REQ-04
+O_r3.json,sophia,Exclusão Prematura de Documentos Fiscais,REQ-08
+O_r3.json,paul,Disponibilidade Exagerada,REQ-03
+O_r3.json,lista final,Integração Inadequada com ERP,REQ-04
+O_r3.json,lista final,Exclusão Prematura de Documentos Fiscais,REQ-08
+O_r3.json,lista final,Disponibilidade Exagerada,REQ-03
+O_r3.json,lista final,Conflito de Autenticação,REQ-10
+O_r3.json,lista final,Acesso Indevido a Dados Sensíveis,REQ-07
+O_r3.json,lista final,Desligamento Fora do Horário Comercial,REQ-12
+O_r3.json,lista final,Armazenamento de Logs Inadequado,REQ-09
